@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Log - Produtividade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Status do Jogador -->
+        <header class="player-stats">
+            <div class="level-info">
+                <h2>Nível <span id="level-display">1</span></h2>
+                <div class="coin-pouch">🪙 <span id="coin-display">0</span></div>
+            </div>
+            
+            <div class="xp-container">
+                <div class="xp-bar" id="xp-bar"></div>
+            </div>
+            <p class="xp-text"><span id="xp-display">0</span> / 100 XP</p>
+        </header>
+
+        <!-- Área de Missões -->
+        <main>
+            <h3>🎯 Missões Diárias</h3>
+            
+            <div class="input-group">
+                <input type="text" id="task-input" placeholder="O que você precisa fazer hoje?">
+                <button onclick="addTask()">Add</button>
+            </div>
+
+            <ul id="task-list" class="task-list">
+                <!-- As tarefas aparecerão aqui -->
+            </ul>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
