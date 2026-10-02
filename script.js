@@ -11,6 +11,13 @@ const XP_PER_TASK = 20;
 const COINS_PER_TASK = 5;
 const XP_TO_LEVEL_UP = 100;
 
+// Itens disponíveis na loja
+const shopItems = [
+    { name: "1 hora de PS5", price: 30 },
+    { name: "Comer um lanche diferente", price: 50 },
+    { name: "Comprar um equipamento novo", price: 300 }
+];
+
 // Carrega os dados ao abrir a página
 document.addEventListener('DOMContentLoaded', () => {
     const savedData = localStorage.getItem('questLogData');
@@ -30,6 +37,9 @@ function updateUI() {
     // Calcula a porcentagem da barra de XP
     const xpPercentage = (player.xp / XP_TO_LEVEL_UP) * 100;
     document.getElementById('xp-bar').style.width = `${xpPercentage}%`;
+
+
+    renderShop();
 }
 
 // Salva os dados no navegador
@@ -87,4 +97,44 @@ function renderTasks() {
         
         list.appendChild(li);
     });
+}
+
+// Desenha a loja na tela
+function renderShop() {
+    const shopList = document.getElementById('shop-list');
+    shopList.innerHTML = "";
+
+    shopItems.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'shop-item';
+        
+        // Verifica se o jogador tem dinheiro para comprar
+        const canAfford = player.coins >= item.price;
+        
+        div.innerHTML = `
+            <div class="shop-item-info">
+                <strong>${item.name}</strong>
+                <span>🪙 ${item.price}</span>
+            </div>
+            <button class="buy-btn" onclick="buyItem(${index})" ${!canAfford ? 'disabled' : ''}>
+                Comprar
+            </button>
+        `;
+        
+        shopList.appendChild(div);
+    });
+}
+
+// Lógica de comprar um item
+function buyItem(index) {
+    const item = shopItems[index];
+    
+    if (player.coins >= item.price) {
+        player.coins -= item.price; // Desconta o valor
+        alert(`🎉 Parabéns! Você resgatou: ${item.name}! Vá aproveitar sua recompensa.`);
+        saveData();
+        updateUI();
+    } else {
+        alert("Moedas insuficientes! Complete mais missões diárias.");
+    }
 }
